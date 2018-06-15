@@ -9,3 +9,8 @@
     background-color: #ffffff;
     background-image: url("../images/vertical-waves.png");
   }
+
+  .img-thumbnail {
+    height: 300px;
+    width: 300px;
+  }

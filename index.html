@@ -16,55 +16,40 @@
 
 <body>
 
-    <div class="container">
+    <div class="container container-fluid">
          <!-- Row 1 -->
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+        <div class="row justify-content-center">
+            <div class="col-xs-6 col-sm-6 col-md-12 col-lg-12">
                 <div class="page-header">
                     <h1>Hangman 80's Bands</h1>
-                    <br>
-                    <br>
                 </div>
             </div>
         </div>
         <!-- Row 2 -->
-        <div class="row">
-            <div class="col-xs-4 col-sm-4 col-md-6 col-lg-6">
-                <img class="img-fluid img-thumbnail" src="assets/images/s-party-background-festive-theme-48850119.jpg" alt="Responsive image">
+        <div class="row justify-content-center">
+            <div class="col-xs-6 col-sm-9 col-md-12 col-lg-12">
+                <img class="img-fluid img-thumbnail img-responsive mx-auto d-block" src="assets/images/s-party-background-festive-theme-48850119.jpg" alt="Responsive image">
             </div>
-            <div id="game" class="col-xs-4 col-sm-4 col-md-6 col-lg-6" >
-                <p>Guess the 80s band Mr. Hangman is thinking of. Please enter a letter!</p>
+            <div id="game">
+                <p>Guess the 80s band Mr. Hangman is thinking of.  Please enter a letter!</p>
             </div>
-            <div class="col-xs-4 col-sm-4 col-md-6 col-lg-6">
+            <div>
                 <p>Wins</p>
                 <p id="html-wins"></p>
                 <p>Mr. Hangman Chose</p>
                 <p id="html-currentBand"></p>
-                <!-- <p id="html-currentBandMasked"></p>  remove once you get the mask replace working -->
                 <p>Number of Guesses Remaining</p>
                 <p id="html-guessesRemaining"></p>
                 <p>Letters Guessed But Not In Word</p>
                 <p id="html-lettersGuessed"></p>
             </div>
         </div>
-        <!-- Row 3 -->
-        <!-- <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                <br>
-                <p class="contact-field-label">Guess the 80s band Mr. Hangman is thinking of. Please enter a letter.</p> -->
-                <!-- <div>
-                    <textarea class="form-control" aria-label="With textarea"></textarea>
-                    <p class="contact-message-box"></p>
-                </div> -->
-            <!-- </div> -->
-        <!-- </div> -->
-        <!-- Row 4 -->
-        <!-- <div class="row col-xs-12 col-sm-12 col-md-9 col-lg-9">
-            <button class="submit-button" type="button" onclick="alert('You guessed a letter...stay tuned')"> Submit </button>
-        </div> -->
     </div>
-    
-    <script src="assets/javascript/game.js"></script>
+</footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap//4.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/javascript/game.js"></script>
 
 </body>
 

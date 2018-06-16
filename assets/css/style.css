@@ -4,18 +4,34 @@
 
   body {
     font-size: 16px;
+    font: black;
     line-height: 32px;
     color: #333;
     background-color: #ffffff;
-    background-image: url("../images/vertical-waves.png");
+    background-image: url("../images/restaurant.png");
   }
 
   .img-thumbnail {
     height: 300px;
     width: 300px;
+    /* margin: 20px; */
+    margin-bottom: 25px;
+    /* border: solid 4px red;  */
+
   }
 
   .container, h1 { 
+    /* border: solid 4px red;  */
+  }
+
+  p {
     text-align: center;
     font-weight: bold;
+    font-size: 26px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    text-align: center;
+    padding: 20px;
   }

@@ -1,5 +1,4 @@
-window.onload = function() {
-   
+/*jshint esversion: 6 */
 
 //Creating variables 
 var wins = 0;                    //number of wins
@@ -11,171 +10,133 @@ var correctLetterPosition = "";        //set correctLetterPosition to empty stri
 var currentBand = "";           //this is the current randomly selected band the user is trying to guess
 var currentBandLettersArray = [];
 var userGuess = "";
-// var shown = "";
 
-//Create a function to start the game: randomly choose band and mask it with "_", display wins 0, display 
-function startGame() {
-    chooseBand();
-    document.getElementById("html-wins").innerHTML = wins;
-    document.getElementById("html-guessesRemaining").innerHTML = guessesRemaining;
-    // //mask CurrentBand with "_"
-    // var maskedCurrentBand = currentBand.replace(/[a-z]/g, '_');
-    // console.log(maskedCurrentBand);
-    // var maskedCurrentBandArray = maskedCurrentBand.split(""); 
-    // document.getElementById("html-currentBandMasked").innerHTML = currentBandLettersArray.join(" ");
-}
-
-//Randomly pick band from listOfBands array, convert it to lower case, and put it in currentBand variable 
-function chooseBand() {
-    currentBand = listOfBands[Math.floor(Math.random() * listOfBands.length)];
-    currentBand = currentBand.toLowerCase();
-    
-    return currentBand;
-}
-
-// //another attempt to get the currentBand to be masked
-// //Replace "_" with userGuess (if it matches)
-// function chooseWord(currentBandLettersArray) {
-//   return currentBandLettersArray[Math.floor(Math.random() * currentBandLettersArray.length)].toUpperCase();
-// }
-// console.log(currentBandLettersArray + "replace method");
-// function fillInWordWithLetter(letter, word) {
-//     word = userGuess;
-//   return word.toLowerCase().split('').map(l ==> {
-//     if (l === letter) {
-//       return l.toUpperCase();
-//     }
-//     return '_'
-//   }).join(' ')
-// }
-
-// fillInWordWithLetter('j', chooseWord(words))
-
-
-startGame();
-console.log(currentBand);
-
-//Process event clicks function - this function is run whenever the user presses a key - this is our event listener
-document.onkeyup = function(event) {
-
-    //Determines which key was pressed 
-    userGuess = event.key;   
-
-    //Convert userGuess to lower case in case they entered a capital letter
-    userGuess = userGuess.toLowerCase();
-
-    //Check if entered value is a letter or a number or a space. If so, update userGuess 
-    const key = event.key.toLowerCase();
-    if (key.length !== 1) {
-        return;
+    //wins counter
+    var counter = wins;
+    var letters = currentBand;
+    if (counter === letters.length) {
+        counter++;
+        document.getElementById("html-wins").innerHTML = wins;
     }
+    console.log("counter: " + counter);
+    console.log("letters.length: " + letters.length);
+    console.log("wins: " + wins);
+
+window.onload = function() {
+
+    startGame();
+    console.log(currentBand);
+
+    //wins counter
+    // var counter = wins;
+    // var letters = currentBand;
+    // if (counter === letters.length) {    //tried so many variations of if and for loops for wins counter using various solutions from class activities and the web.
+    //     counter++;                       //Just couldn't get it to work. 
+    //     document.getElementById("html-wins").innerHTML = wins;
+    // }
+    // console.log("counter: " + counter);
+    // console.log("letters.length: " + letters.length);
+    // console.log("wins: " + wins);
     
-    const isLetter = (key >= "a" && key <= "z");
-    const isNumber = (key >= "0" && key <= "9");
-    // const isSpace = (key = " ");  //rats, coundn't get it to check for spaces, got error*****
-    if (isLetter || isNumber) {
-        //|| isSpace) 
-        guessesRemaining--;             //decrement guessesRemaining
-        document.getElementById("html-guessesRemaining").innerHTML = guessesRemaining; 
-        console.log(guessedLetters);
-        console.log(guessesRemaining);
+    //Create a function to start the game: randomly choose band and mask it with "_", display wins 0, display 
+    function startGame() {
+        chooseBand();
+        document.getElementById("html-wins").innerHTML = wins;
+        document.getElementById("html-guessesRemaining").innerHTML = guessesRemaining;
+        //Never got this part to work
+        // //mask CurrentBand with "_"
+        // var maskedCurrentBand = currentBand.replace(/[a-z]/g, '_');
+        // console.log(maskedCurrentBand);
+        // var maskedCurrentBandArray = maskedCurrentBand.split(""); 
+        // document.getElementById("html-currentBandMasked").innerHTML = currentBandLettersArray.join(" ");
+    }
+
+    //Randomly pick band from listOfBands array, convert it to lower case, and put it in currentBand variable 
+    function chooseBand() {
+        currentBand = listOfBands[Math.floor(Math.random() * listOfBands.length)];
+        currentBand = currentBand.toLowerCase();
+        return currentBand;
+    }
+
+    //Process event clicks function - this function is run whenever the user presses a key - this is our event listener
+    document.onkeyup = function(event) {
+
+        //Determines which key was pressed 
+        userGuess = event.key;   
+
+        //Convert userGuess to lower case in case they entered a capital letter
+        userGuess = userGuess.toLowerCase();
+
+        //Check if entered value is a letter or a number or a space. If so, convert to lower case and proceed 
+        const key = event.key.toLowerCase();
+        if (key.length !== 1) {
+            return;
+        }
         
-        //convert currentBand letters to an array so that we can compare userGuess to them 
-        currentBandLettersArray = currentBand.split(""); 
-        console.log(currentBandLettersArray);
+        const isLetter = (key >= "a" && key <= "z");
+        const isNumber = (key >= "0" && key <= "9");
+        // const isSpace = (key = " ");  //rats, coundn't get it to check for spaces, got error*****
+        if (isLetter || isNumber) {
+            //|| isSpace) 
+            guessesRemaining--;             //decrement guessesRemaining
+            document.getElementById("html-guessesRemaining").innerHTML = guessesRemaining; 
+            console.log(guessedLetters);
+            console.log(guessesRemaining);
+            
+            //convert currentBand letters to an array so that we can compare userGuess to them 
+            currentBandLettersArray = currentBand.split(""); 
+            console.log(currentBandLettersArray);
 
-        //store index of correct userGuess within currentBandLettersArray to correctLetterPosition, then we want to put userGuess in that same index of wordSoFar...charAt, replaceAt, splice???
-        correctLetterPosition = currentBandLettersArray.indexOf(userGuess); 
-        console.log("correctLetterPosition: " + correctLetterPosition);  
+            //store index of correct userGuess within currentBandLettersArray to correctLetterPosition, then we want to put userGuess in that same index of wordSoFar...charAt, replaceAt, splice???
+            correctLetterPosition = currentBandLettersArray.indexOf(userGuess); 
+            console.log("correctLetterPosition: " + correctLetterPosition);  
 
-        while (wordSoFar != currentBandLettersArray) {           //Using while loop here because I don't know how many time it will need to run
-        //Check if userGuess in currentBandLettersArray
-        if (currentBandLettersArray.indexOf(userGuess) === -1) { // If userGuess NOT in currentBandLettersArray
+            while (wordSoFar != currentBandLettersArray && guessesRemaining <=30) {     //Using while loop here because I don't know how many time it will need to run
+                //Check if userGuess in currentBandLettersArray
+                if (currentBandLettersArray.indexOf(userGuess) === -1) { // If userGuess NOT in currentBandLettersArray
 
-            //push userGuess to guessedLetters array which displays to "Letters Guessed But Not In Word" 
-            guessedLetters.push(userGuess); 
-            document.getElementById("html-lettersGuessed").innerHTML = guessedLetters.join(" ");
-            alert("Try again");
-            console.log("try again");
-        }
-        //userGuess is in currentBandLettersArray, now we need to add it to wordSoFar and write it to 
-        else {
+                    //push userGuess to guessedLetters array which displays to "Letters Guessed But Not In Word" 
+                    guessedLetters.push(userGuess); 
+                    document.getElementById("html-lettersGuessed").innerHTML = guessedLetters.join(" ");
+                    alert("This letter isn't in the current band's name. Try again.");
+                    console.log("This letter isn't in the current band's name. Try again.");
+                }
+                else { //userGuess is in currentBandLettersArray, now we need to add it to wordSoFar and write it to 
 
-            //need to check for duplicate characters but need to handle words that have multiple occurrences of the same character (i.e., "Queen" has 2 "e"s.)
-            var progress = "";
-            var letters = currentBandLettersArray;
-            for(i = 0, progress = ''; i < letters.length; i++) {
-            progress += wordSoFar.indexOf(letters[i]) == -1 ? '_' : letters[i];
-            //alert("You already entered that letter");
+                    //need to check for duplicate characters but need to handle words that have multiple occurrences of the same character (i.e., "Queen" has 2 "e"s.)
+                    var progress = "";
+                    var letters = currentBandLettersArray;
+                    for(i = 0, progress = ''; i < letters.length; i++) {
+                        progress += wordSoFar.indexOf(letters[i]) == -1 ? '_' : letters[i];
+                        // alert("You already entered that letter");
+                    }
+                    console.log("progress: " + progress);
+                    wordSoFar.push(userGuess);
+                    console.log("wordSoFar: " + wordSoFar);
+                    console.log("currentBandLettersArray: " + currentBandLettersArray);
+                    //write the guessed letters to the screen under "Mr. Hangman chose" - still need to do the letter positioning
+                    //document.getElementById("html-currentBand").innerHTML = wordSoFar.join(" ");
+                    document.getElementById("html-currentBand").innerHTML = progress;
+                    if (wordSoFar === currentBandLettersArray) {
+                        wins++;  //trying once again to increment wins
+                        document.getElementById("html-wins").innerHTML = wins;
+                        break;
+                   }
+                }
+                    return userGuess; //do not remove this...infinite loop will ensue
             }
-            console.log("progress: " + progress);
-
-            wordSoFar.push(userGuess);
-            console.log("wordSoFar: " + wordSoFar);
-            console.log("currentBandLettersArray: " + currentBandLettersArray);
-            //write the guessed letters to the screen under "Mr. Hangman chose" - still need to do the letter positioning
-            //document.getElementById("html-currentBand").innerHTML = wordSoFar.join(" ");
-            document.getElementById("html-currentBand").innerHTML = progress;
-            }
-            return userGuess; //do not remove this...infinite loop will ensue
         }
-        wins++;                             //wins counter is not working, I want it to increment when the arrays match, jshint returns "Unreachable 'wins' after return"
-        console.log("wins: " + wins);
-    }
-        //Need to make is stop once the word is filled in - not sure how to do this
-   
-        // Creating a variable to hold our new HTML. Our HTML now keeps track of the user and computer guesses, and wins/losses/ties.
-        // var html =
-        // "<p>You chose: " + userGuess + "</p>" +
-        // "<p>Mr Hangman chose: " + currentBand + "</p>" +
-        // "<p>wins: " + wins + "</p>";
 
-        // // Set the inner HTML contents of the #game div to our html string
-        // document.querySelector("#game").innerHTML = html;
-        // console.log(userGuess);
-
-
-        return userGuess;
-};
-// };
-
-
- // for (var i = 0; i < 10; i++) {
-
-        // }
-
-// function renderWord() {
-//     //display # of chars as underscores (using replace)s
-//     for (var i = 0; i < currentBand.length; i++) {
-//     var masked = currentBand.replace(i,"_");
-//     console.log(masked);
-
-//     document.getElementById("word").innerHTML = wordSoFar.join(" ");
-//     }
-// }    
-   
-
-// or do I need this?  I don't think I need this because this is looking for the whole word in an array. I am looking for a letter in a string 
-// if (listOfBands.indexOf(userGuessLower) === -1) {
-//     alert("Nah! They're pretty lame...");
-//   }
-//   // If it is in the array...
-//   else {
-//     alert("OMG! I love them too!");
-//   }
-
-
+    }; // close document.onkeyup = function(event)
     
 
-    //read userGuess and convert to lower case
-    //while guessesRemaining <= 30 and currentBand not fully guessed, check if userGuess is in currentBand
-        //--> if yes, display letter in proper position and decrement guessesRemaining
-        //--> if no, display "Sorry, try again" message, add userGuess to guessedLetters array, and decrement guessesRemaining
-        // if (currentWord(indexOf(userGuess) === -1) {
+        //read userGuess and convert to lower case
+        //while guessesRemaining <= 30 and currentBand not fully guessed, check if userGuess is in currentBand
+            //--> if yes, display letter in proper position and decrement guessesRemaining
+            //--> if no, display "Sorry, try again" message, add userGuess to guessedLetters array, and decrement guessesRemaining
+            // if (currentWord(indexOf(userGuess) === -1) {
 
-        // })
-
-    //If guessesRemaining <= 30 and currentBand is fully guessed, increment Wins by 1 and replace header img with band img 
-    //Optional, time permitting: play song or video by band
+        //If guessesRemaining <= 30 and currentBand is fully guessed, increment Wins by 1 and replace header img with band img 
+        //Optional, time permitting: play song or video by band
 
 }; //Close window.onload

@@ -6,8 +6,8 @@ var wins = 0;                    //number of wins
 var listOfBands = ["Madonna", "Prince", "Madonna", "Genesis","Queen","Journey","Aerosmith"]; //list of bands array
 var guessesRemaining = 30;      //guesses remaining, start at 30, decrement with each guess
 var guessedLetters = [];        //set guessedLetters to empty
-var wordSoFar = [];             //set wordSoFar to empty
-var correctLetters = [];        //set correctLetters to empty
+var wordSoFar = [];             //set wordSoFar to empty 
+var correctLetterPosition = [];        //set correctLetterPosition to empty
 var currentBand = "";           //this is the current randomly selected band the user is trying to guess
 var currentBandLettersArray = [];
 var userGuess = "";
@@ -18,11 +18,11 @@ function startGame() {
     chooseBand();
     document.getElementById("html-wins").innerHTML = "<p>0</p>";
     document.getElementById("html-guessesRemaining").innerHTML = "<p>30</p>";
-    //mask CurrentBand with "_"
-    var maskedCurrentBand = currentBand.replace(/[a-z]/g, '_');
-    console.log(maskedCurrentBand);
-    var maskedCurrentBandArray = maskedCurrentBand.split(""); 
-    document.getElementById("html-currentBandMasked").innerHTML = currentBandLettersArray.join(" ");
+    // //mask CurrentBand with "_"
+    // var maskedCurrentBand = currentBand.replace(/[a-z]/g, '_');
+    // console.log(maskedCurrentBand);
+    // var maskedCurrentBandArray = maskedCurrentBand.split(""); 
+    // document.getElementById("html-currentBandMasked").innerHTML = currentBandLettersArray.join(" ");
 }
 
 //Randomly pick band from listOfBands array, convert it to lower case, and put it in currentBand variable 
@@ -75,8 +75,6 @@ document.onkeyup = function(event) {
     // const isSpace = (key = " ");  //rats, coundn't get it to check for spaces, got error*****
     if (isLetter || isNumber) {
         //|| isSpace) 
-        //push userGuess to guessedLetters array
-        guessedLetters.push(userGuess); //put userGuess into the guessedLetters array so it can be displayed to the user
         guessesRemaining--;             //decrement guessesRemaining
         document.getElementById("html-guessesRemaining").innerHTML = guessesRemaining; 
         console.log(guessedLetters);
@@ -85,22 +83,31 @@ document.onkeyup = function(event) {
         //convert currentBand letters to an array so that we can compare userGuess to them
         currentBandLettersArray = currentBand.split(""); 
         console.log(currentBandLettersArray);
-        var correctLetters = currentBandLettersArray.indexOf(userGuess);
+        //Create variable to store index of correct userGuess within currentBandLettersArray, then we want to put userGuess in that same index of wordSoFar
+        var correctLetterPosition = currentBandLettersArray.indexOf(userGuess); 
+        console.log("correctLetterPosition: " + correctLetterPosition);  
+
+        while (wordSoFar != currentBandLettersArray) {
         //Check if userGuess in currentBandLettersArray
-        if (currentBandLettersArray.indexOf(userGuess) === -1) {
+        if (currentBandLettersArray.indexOf(userGuess) === -1) { // If userGuess NOT in currentBandLettersArray
+            //push userGuess to guessedLetters array which displays to "Letters Guessed But Not In Word" - how can I put in specific index?
+            guessedLetters.push(userGuess); 
             document.getElementById("html-lettersGuessed").innerHTML = guessedLetters.join(" ");
             console.log("try again");
         }
         //userGuess is in currentBandLettersArray, now what?
         else {
                 wordSoFar.push(userGuess);
-                console.log(wordSoFar);
+                console.log("wordSoFar: " + wordSoFar);
                 //write the guessed letters to the screen under "Mr. Hangman chose" - still need to do the letter positioning
                 document.getElementById("html-currentBand").innerHTML = wordSoFar.join(" ");
-                guessedLetters.push(userGuess);
                 }
                 return userGuess;
+        wins++;                             //wins counter is not working, I want it to increment when the arrays match
+        console.log("wins: " + wins);
         }
+        
+    }
         //Need to make is stop once the word is filled in - not sure how to do this
    
         // Creating a variable to hold our new HTML. Our HTML now keeps track of the user and computer guesses, and wins/losses/ties.

@@ -64,12 +64,6 @@ document.onkeyup = function(event) {
     //Convert userGuess to lower case in case they entered a capital letter
     userGuess = userGuess.toLowerCase();
 
-
-    //everything I do inside this loop doesn't work...none of my variables are available.
-    var str = currentBand;
-    var n = str.includes(userGuess);
-    document.getElementById("game").innerHTML = n;
-
     //Check if entered value is a letter or a number or a space. If so, update userGuess 
     const key = event.key.toLowerCase();
     if (key.length !== 1) {
@@ -120,7 +114,8 @@ document.onkeyup = function(event) {
             console.log("wordSoFar: " + wordSoFar);
             console.log("currentBandLettersArray: " + currentBandLettersArray);
             //write the guessed letters to the screen under "Mr. Hangman chose" - still need to do the letter positioning
-            document.getElementById("html-currentBand").innerHTML = wordSoFar.join(" ");
+            //document.getElementById("html-currentBand").innerHTML = wordSoFar.join(" ");
+            document.getElementById("html-currentBand").innerHTML = progress;
             }
             return userGuess; //do not remove this...infinite loop will ensue
         }

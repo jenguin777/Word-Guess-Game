@@ -7,17 +7,17 @@ var listOfBands = ["Madonna", "Prince", "Madonna", "Genesis","Queen","Journey","
 var guessesRemaining = 30;      //guesses remaining, start at 30, decrement with each guess
 var guessedLetters = [];        //set guessedLetters to empty
 var wordSoFar = [];             //set wordSoFar to empty 
-var correctLetterPosition = [];        //set correctLetterPosition to empty
+var correctLetterPosition = "";        //set correctLetterPosition to empty string
 var currentBand = "";           //this is the current randomly selected band the user is trying to guess
 var currentBandLettersArray = [];
 var userGuess = "";
-var shown = "";
+// var shown = "";
 
 //Create a function to start the game: randomly choose band and mask it with "_", display wins 0, display 
 function startGame() {
     chooseBand();
-    document.getElementById("html-wins").innerHTML = "<p>0</p>";
-    document.getElementById("html-guessesRemaining").innerHTML = "<p>30</p>";
+    document.getElementById("html-wins").innerHTML = wins;
+    document.getElementById("html-guessesRemaining").innerHTML = guessesRemaining;
     // //mask CurrentBand with "_"
     // var maskedCurrentBand = currentBand.replace(/[a-z]/g, '_');
     // console.log(maskedCurrentBand);
@@ -64,6 +64,12 @@ document.onkeyup = function(event) {
     //Convert userGuess to lower case in case they entered a capital letter
     userGuess = userGuess.toLowerCase();
 
+
+    //everything I do inside this loop doesn't work...none of my variables are available.
+    var str = currentBand;
+    var n = str.includes(userGuess);
+    document.getElementById("game").innerHTML = n;
+
     //Check if entered value is a letter or a number or a space. If so, update userGuess 
     const key = event.key.toLowerCase();
     if (key.length !== 1) {
@@ -80,33 +86,46 @@ document.onkeyup = function(event) {
         console.log(guessedLetters);
         console.log(guessesRemaining);
         
-        //convert currentBand letters to an array so that we can compare userGuess to them
+        //convert currentBand letters to an array so that we can compare userGuess to them 
         currentBandLettersArray = currentBand.split(""); 
         console.log(currentBandLettersArray);
-        //Create variable to store index of correct userGuess within currentBandLettersArray, then we want to put userGuess in that same index of wordSoFar
-        var correctLetterPosition = currentBandLettersArray.indexOf(userGuess); 
+
+        //store index of correct userGuess within currentBandLettersArray to correctLetterPosition, then we want to put userGuess in that same index of wordSoFar...charAt, replaceAt, splice???
+        correctLetterPosition = currentBandLettersArray.indexOf(userGuess); 
         console.log("correctLetterPosition: " + correctLetterPosition);  
 
-        while (wordSoFar != currentBandLettersArray) {
+        while (wordSoFar != currentBandLettersArray) {           //Using while loop here because I don't know how many time it will need to run
         //Check if userGuess in currentBandLettersArray
         if (currentBandLettersArray.indexOf(userGuess) === -1) { // If userGuess NOT in currentBandLettersArray
-            //push userGuess to guessedLetters array which displays to "Letters Guessed But Not In Word" - how can I put in specific index?
+
+            //push userGuess to guessedLetters array which displays to "Letters Guessed But Not In Word" 
             guessedLetters.push(userGuess); 
             document.getElementById("html-lettersGuessed").innerHTML = guessedLetters.join(" ");
+            alert("Try again");
             console.log("try again");
         }
-        //userGuess is in currentBandLettersArray, now what?
+        //userGuess is in currentBandLettersArray, now we need to add it to wordSoFar and write it to 
         else {
-                wordSoFar.push(userGuess);
-                console.log("wordSoFar: " + wordSoFar);
-                //write the guessed letters to the screen under "Mr. Hangman chose" - still need to do the letter positioning
-                document.getElementById("html-currentBand").innerHTML = wordSoFar.join(" ");
-                }
-                return userGuess;
-        wins++;                             //wins counter is not working, I want it to increment when the arrays match
-        console.log("wins: " + wins);
+
+            //need to check for duplicate characters but need to handle words that have multiple occurrences of the same character (i.e., "Queen" has 2 "e"s.)
+            var progress = "";
+            var letters = currentBandLettersArray;
+            for(i = 0, progress = ''; i < letters.length; i++) {
+            progress += wordSoFar.indexOf(letters[i]) == -1 ? '_' : letters[i];
+            //alert("You already entered that letter");
+            }
+            console.log("progress: " + progress);
+
+            wordSoFar.push(userGuess);
+            console.log("wordSoFar: " + wordSoFar);
+            console.log("currentBandLettersArray: " + currentBandLettersArray);
+            //write the guessed letters to the screen under "Mr. Hangman chose" - still need to do the letter positioning
+            document.getElementById("html-currentBand").innerHTML = wordSoFar.join(" ");
+            }
+            return userGuess; //do not remove this...infinite loop will ensue
         }
-        
+        wins++;                             //wins counter is not working, I want it to increment when the arrays match, jshint returns "Unreachable 'wins' after return"
+        console.log("wins: " + wins);
     }
         //Need to make is stop once the word is filled in - not sure how to do this
    

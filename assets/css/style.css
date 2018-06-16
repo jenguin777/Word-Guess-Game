@@ -14,3 +14,7 @@
     height: 300px;
     width: 300px;
   }
+
+  .container, h1 { 
+    text-align: center;
+  }

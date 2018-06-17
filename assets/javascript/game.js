@@ -72,11 +72,14 @@ window.onload = function() {
         const isNumber = (key >= "0" && key <= "9");
         // const isSpace = (key = " ");  //rats, coundn't get it to check for spaces, got error*****
         if (isLetter || isNumber) {
-            //|| isSpace) 
-            guessesRemaining--;             //decrement guessesRemaining
-            document.getElementById("html-guessesRemaining").innerHTML = guessesRemaining; 
-            console.log(guessedLetters);
-            console.log(guessesRemaining);
+            //|| isSpace)
+            //need to decrement guessesRemaining until we get to 0 - this is not working and I don't understand why
+            for (let i = 30; i > -1; i--); {
+                guessesRemaining--;             //decrement guessesRemaining
+                document.getElementById("html-guessesRemaining").innerHTML = guessesRemaining; 
+                console.log(guessedLetters);
+                console.log(guessesRemaining);
+            }
             
             //convert currentBand letters to an array so that we can compare userGuess to them 
             currentBandLettersArray = currentBand.split(""); 

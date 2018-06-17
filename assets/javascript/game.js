@@ -1,42 +1,19 @@
 /*jshint esversion: 6 */
 
-//Creating variables 
-var wins = 0;                    //number of wins
-var listOfBands = ["Madonna", "Prince", "Madonna", "Genesis","Queen","Journey","Aerosmith"]; //list of bands array
-var guessesRemaining = 30;      //guesses remaining, start at 30, decrement with each guess
-var guessedLetters = [];        //set guessedLetters to empty
-var wordSoFar = [];             //set wordSoFar to empty 
-var correctLetterPosition = "";        //set correctLetterPosition to empty string
-var currentBand = "";           //this is the current randomly selected band the user is trying to guess
-var currentBandLettersArray = [];
-var userGuess = "";
-
-    //wins counter
-    var counter = wins;
-    var letters = currentBand;
-    if (counter === letters.length) {
-        counter++;
-        document.getElementById("html-wins").innerHTML = wins;
-    }
-    console.log("counter: " + counter);
-    console.log("letters.length: " + letters.length);
-    console.log("wins: " + wins);
-
 window.onload = function() {
 
-    startGame();
-    console.log(currentBand);
+    //Creating variables 
+    var wins = 0;                    //number of wins
+    var listOfBands = ["Madonna", "Prince", "Madonna", "Genesis","Queen","Journey","Aerosmith"]; //list of bands array
+    var guessesRemaining = 30;      //guesses remaining, start at 30, decrement with each guess
+    var guessedLetters = [];        //set guessedLetters to empty
+    var wordSoFar = [];             //set wordSoFar to empty 
+    var correctLetterPosition = "";        //set correctLetterPosition to empty string
+    var currentBand = "";           //this is the current randomly selected band the user is trying to guess
+    var currentBandLettersArray = [];
+    var userGuess = "";
 
-    //wins counter
-    // var counter = wins;
-    // var letters = currentBand;
-    // if (counter === letters.length) {    //tried so many variations of if and for loops for wins counter using various solutions from class activities and the web.
-    //     counter++;                       //Just couldn't get it to work. 
-    //     document.getElementById("html-wins").innerHTML = wins;
-    // }
-    // console.log("counter: " + counter);
-    // console.log("letters.length: " + letters.length);
-    // console.log("wins: " + wins);
+    //Define functions    
     
     //Create a function to start the game: randomly choose band and mask it with "_", display wins 0, display 
     function startGame() {
@@ -57,6 +34,24 @@ window.onload = function() {
         currentBand = currentBand.toLowerCase();
         return currentBand;
     }
+
+    //Start game logic
+
+    startGame();
+    console.log(currentBand);
+    console.log(wins);
+
+    //wins counter - here, trying the string.length method 
+    var counter = wins;
+    var letters = currentBand;
+    var word = wordSoFar.toString();
+    if (word === letters) {
+        counter++;
+        document.getElementById("html-wins").innerHTML = counter;
+    }
+    console.log("counter: " + counter);
+    console.log("letters.length: " + letters.length);
+    console.log("wins: " + wins);
 
     //Process event clicks function - this function is run whenever the user presses a key - this is our event listener
     document.onkeyup = function(event) {
@@ -87,9 +82,9 @@ window.onload = function() {
             currentBandLettersArray = currentBand.split(""); 
             console.log(currentBandLettersArray);
 
-            //store index of correct userGuess within currentBandLettersArray to correctLetterPosition, then we want to put userGuess in that same index of wordSoFar...charAt, replaceAt, splice???
-            correctLetterPosition = currentBandLettersArray.indexOf(userGuess); 
-            console.log("correctLetterPosition: " + correctLetterPosition);  
+            // //store index of correct userGuess within currentBandLettersArray to correctLetterPosition, then we want to put userGuess in that same index of wordSoFar...charAt, replaceAt, splice???
+            // correctLetterPosition = currentBandLettersArray.indexOf(userGuess); 
+            // console.log("correctLetterPosition: " + correctLetterPosition);  
 
             while (wordSoFar != currentBandLettersArray && guessesRemaining <=30) {     //Using while loop here because I don't know how many time it will need to run
                 //Check if userGuess in currentBandLettersArray
@@ -107,18 +102,18 @@ window.onload = function() {
                     var progress = "";
                     var letters = currentBandLettersArray;
                     for(i = 0, progress = ''; i < letters.length; i++) {
-                        progress += wordSoFar.indexOf(letters[i]) == -1 ? '_' : letters[i];
-                        // alert("You already entered that letter");
+                        progress += wordSoFar.indexOf(letters[i]) == -1 ? '_' : letters[i];  //this is not capturing the first correct keystroke, the display is always 1 stroke behind
                     }
                     console.log("progress: " + progress);
                     wordSoFar.push(userGuess);
                     console.log("wordSoFar: " + wordSoFar);
                     console.log("currentBandLettersArray: " + currentBandLettersArray);
-                    //write the guessed letters to the screen under "Mr. Hangman chose" - still need to do the letter positioning
+                    //write the guessed letters to the screen under "Mr. Hangman chose" 
                     //document.getElementById("html-currentBand").innerHTML = wordSoFar.join(" ");
                     document.getElementById("html-currentBand").innerHTML = progress;
                     if (wordSoFar === currentBandLettersArray) {
-                        wins++;  //trying once again to increment wins
+                        wins++;  //trying once again to increment wins since loop doesn't appear to be working
+                        
                         document.getElementById("html-wins").innerHTML = wins;
                         break;
                    }
